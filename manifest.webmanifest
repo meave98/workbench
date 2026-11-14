@@ -1,0 +1,19 @@
+{
+  "name": "高职应用文写作AIGC分层干预教学",
+  "short_name": "应用文写作",
+  "description": "高职应用文写作AIGC分层干预教学工作台：分组记录五次测试成绩，自动计算平均分。",
+  "lang": "zh-CN",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#eef8f3",
+  "theme_color": "#13684f",
+  "categories": ["education", "productivity"],
+  "icons": [
+    { "src": "./icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "./icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "./icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "./icon-180.png", "sizes": "180x180", "type": "image/png", "purpose": "any" }
+  ]
+}
