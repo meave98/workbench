@@ -1,0 +1,1600 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>高职应用文写作AIGC分层干预教学 · 教学工作台</title>
+<meta name="theme-color" content="#13684f">
+<meta name="description" content="高职应用文写作AIGC分层干预教学工作台：实验组低/中/高能力组与对照组，五次测试成绩记录与平均分统计。">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
+<link rel="apple-touch-icon" href="./icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="应用文写作">
+<style>
+/* ============================================================
+   美式复古 · 绿色基调 + 撞色（芥末黄 / 砖红）+ 格纹
+   ============================================================ */
+:root{
+  --jade-950:#0B1F17;
+  --jade-900:#10281F;
+  --jade-800:#16382B;
+  --jade-700:#1D4D3A;
+  --jade-600:#2A6149;
+  --jade-500:#3F7A5C;
+  --jade-400:#6B9C7B;
+  --jade-300:#9CBFA8;
+  --jade-200:#C9DCC9;
+  --jade-100:#E2EBDA;
+  --jade-50:#F1F5E9;
+
+  --mustard:#E0A32E;
+  --mustard-deep:#C4881C;
+  --mustard-soft:#F7E6BA;
+  --brick:#BE4F38;
+  --brick-deep:#9C3C29;
+  --brick-soft:#F4D9D0;
+
+  --paper:#FBF5E7;
+  --paper-2:#F3EAD4;
+  --paper-3:#F0E7D2;
+
+  --ink:#17251D;
+  --ink-2:#3D5245;
+  --muted:#7F8D7C;
+  --line:#DCD3BB;
+  --line-2:#C9BE9E;
+
+  --font-display:Georgia,"Times New Roman","Songti SC","SimSun",serif;
+  --font-body:"PingFang SC","Microsoft YaHei",system-ui,-apple-system,"Segoe UI",sans-serif;
+
+  --shadow-1:4px 4px 0 var(--jade-900);
+  --shadow-2:7px 7px 0 var(--jade-900);
+  --shadow-soft:0 2px 0 rgba(16,40,31,.10), 0 10px 24px rgba(16,40,31,.10);
+
+  --r-xl:10px;
+  --r-lg:8px;
+  --r-md:6px;
+}
+
+.theme-low {--acc:#7FAE8C;--acc-mid:#54926E;--acc-deep:#2A6149;--acc-soft:#E9F1E4;--acc-line:#BFD3BE;--pop:#E0A32E;}
+.theme-mid {--acc:#5D9670;--acc-mid:#37734F;--acc-deep:#1B4735;--acc-soft:#E4EEE0;--acc-line:#B6CDB4;--pop:#E0A32E;}
+.theme-high{--acc:#3F7A5C;--acc-mid:#1F5039;--acc-deep:#0B241A;--acc-soft:#DEEBDA;--acc-line:#A9C4A8;--pop:#BE4F38;}
+.theme-ctrl{--acc:#93A487;--acc-mid:#71855F;--acc-deep:#37472F;--acc-soft:#EDF0E2;--acc-line:#CBD3B9;--pop:#8A6A3C;}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  font-family:var(--font-body);
+  color:var(--ink);
+  font-size:15px;
+  line-height:1.62;
+  min-height:100vh;
+  background-color:var(--paper-3);
+  background-image:
+    linear-gradient(rgba(29,77,58,.078) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(29,77,58,.078) 1px, transparent 1px),
+    linear-gradient(rgba(29,77,58,.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(29,77,58,.045) 1px, transparent 1px);
+  background-size:56px 56px, 56px 56px, 14px 14px, 14px 14px;
+  background-position:0 0, 0 0, 0 0, 0 0;
+  -webkit-font-smoothing:antialiased;
+  -webkit-tap-highlight-color:transparent;
+  overscroll-behavior-y:contain;
+}
+/* 纸张颗粒 */
+body::after{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E");
+  mix-blend-mode:multiply;
+}
+h1,h2,h3,p{margin:0}
+button{font-family:inherit}
+::selection{background:var(--mustard);color:var(--jade-900)}
+::-webkit-scrollbar{height:11px;width:11px}
+::-webkit-scrollbar-track{background:var(--paper-2)}
+::-webkit-scrollbar-thumb{background:var(--jade-700);border:2px solid var(--paper-2);border-radius:0}
+::-webkit-scrollbar-thumb:hover{background:var(--jade-900)}
+
+/* ============================================================
+   小熊
+   ============================================================ */
+.bear{width:1em;height:1em;display:block}
+.bear-def{position:absolute;width:0;height:0;overflow:hidden}
+
+/* ============================================================
+   顶栏
+   ============================================================ */
+.topbar{
+  position:sticky;top:0;z-index:60;
+  padding-top:env(safe-area-inset-top);
+  background:var(--jade-800);
+  border-bottom:3px solid var(--jade-900);
+}
+.topbar::after{
+  content:"";position:absolute;left:0;right:0;bottom:-9px;height:6px;z-index:2;
+  background:repeating-linear-gradient(45deg,
+    var(--mustard) 0 9px, var(--jade-900) 9px 18px);
+  border-bottom:1px solid var(--jade-900);
+}
+.topbar-inner{
+  max-width:1240px;margin:0 auto;padding:13px 28px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+}
+.brand{display:flex;align-items:center;gap:14px;min-width:0}
+.logo{
+  --bear-face:#fff;--bear-ink:var(--jade-900);--bear-inner:rgba(255,255,255,.55);
+  width:46px;height:46px;flex:0 0 46px;border-radius:6px;
+  display:grid;place-items:center;color:#fff;
+  background:var(--mustard);
+  border:2px solid var(--jade-900);
+  box-shadow:3px 3px 0 var(--jade-900);
+  position:relative;
+}
+.logo .bear{font-size:28px;--bear-face:var(--mustard);--bear-ink:var(--jade-900)}
+.brand-txt{min-width:0}
+.brand-txt h1{
+  font-family:var(--font-display);
+  font-size:18px;font-weight:700;letter-spacing:.5px;line-height:1.3;
+  color:var(--paper);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.brand-txt p{
+  font-size:10.5px;color:var(--mustard);letter-spacing:2.4px;
+  margin-top:3px;text-transform:uppercase;font-weight:600;
+}
+.top-tags{display:flex;align-items:center;gap:8px}
+.tag{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:11.5px;font-weight:600;letter-spacing:.6px;
+  color:var(--paper);background:transparent;
+  border:1.5px solid rgba(251,245,231,.45);
+  padding:5px 12px;border-radius:3px;
+  white-space:nowrap;
+}
+.tag i{width:6px;height:6px;background:var(--jade-300);display:block}
+.tag.solid{background:var(--brick);border-color:var(--brick-deep);color:#fff;box-shadow:2px 2px 0 var(--jade-950)}
+.tag.solid i{background:var(--mustard)}
+
+/* ============================================================
+   面包屑 / 容器
+   ============================================================ */
+.crumbs{
+  position:relative;z-index:1;
+  max-width:1240px;margin:0 auto;padding:26px 28px 0;
+  display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--ink-2);
+  min-height:20px;
+}
+.crumbs a{
+  color:var(--jade-700);cursor:pointer;padding:2px 6px;text-decoration:none;
+  border-bottom:1.5px solid transparent;transition:.15s;
+}
+.crumbs a:hover{border-bottom-color:var(--mustard);color:var(--jade-900)}
+.crumbs .cur{
+  color:var(--jade-900);font-weight:700;
+  background:var(--mustard-soft);padding:2px 8px;border:1px solid var(--line-2);
+}
+.crumbs .sep{color:var(--line-2)}
+
+.wrap{position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:0 28px 64px}
+.wrap>*{animation:rise .45s cubic-bezier(.2,.75,.3,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.foot{
+  position:relative;z-index:1;
+  max-width:1240px;margin:0 auto;
+  padding:0 28px calc(46px + env(safe-area-inset-bottom));
+  font-size:12px;color:var(--muted);
+  display:flex;align-items:center;gap:9px;
+}
+.foot .bear{font-size:14px;color:var(--jade-500);--bear-face:var(--paper)}
+
+/* ============================================================
+   Hero
+   ============================================================ */
+.hero{
+  margin:26px 0 24px;
+  display:flex;align-items:center;justify-content:space-between;gap:30px;
+  padding-bottom:18px;
+  border-bottom:2px solid var(--jade-800);
+  position:relative;
+}
+.hero::after{
+  content:"";position:absolute;left:0;bottom:-2px;width:96px;height:6px;
+  background:var(--mustard);
+}
+.hero-copy{max-width:720px}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:10.5px;font-weight:700;letter-spacing:2px;
+  color:var(--jade-900);background:var(--mustard);
+  padding:4px 11px;border:1.5px solid var(--jade-900);
+  border-radius:2px;margin-bottom:14px;
+  box-shadow:2px 2px 0 var(--jade-900);
+}
+.hero h2{
+  font-family:var(--font-display);
+  font-size:27px;font-weight:700;letter-spacing:1px;line-height:1.3;
+  color:var(--jade-900);
+}
+.hero p{margin-top:10px;color:var(--ink-2);font-size:13.5px;line-height:1.85}
+.link{
+  border:0;background:transparent;color:var(--jade-700);font-size:13px;font-weight:600;
+  cursor:pointer;padding:4px 2px;border-radius:0;transition:.15s;
+  display:inline-flex;align-items:center;gap:5px;
+  border-bottom:1.5px solid var(--line-2);
+}
+.link:hover{color:var(--brick);border-bottom-color:var(--brick)}
+
+/* hero 小熊组 */
+.bear-stack{position:relative;width:152px;height:112px;flex:0 0 152px}
+.bear-stack .bs{
+  position:absolute;width:62px;height:62px;border-radius:50%;
+  display:grid;place-items:center;
+  border:2.5px solid var(--jade-900);
+  box-shadow:3px 3px 0 var(--jade-900);
+}
+.bear-stack .bs .bear{font-size:36px;color:#fff;--bear-face:rgba(255,255,255,.9)}
+.bear-stack .b1{right:0;top:36px;background:var(--mustard);z-index:3;--bear-ink:var(--jade-900)}
+.bear-stack .b1 .bear{--bear-face:var(--mustard)}
+.bear-stack .b2{right:52px;top:6px;background:var(--jade-600);z-index:2;--bear-ink:var(--jade-900)}
+.bear-stack .b3{right:98px;top:44px;background:var(--brick);z-index:1;--bear-ink:var(--jade-900)}
+.bear-stack .bs{animation:floaty 7s ease-in-out infinite}
+.bear-stack .b2{animation-delay:-2.3s}
+.bear-stack .b3{animation-delay:-4.6s}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+
+/* ============================================================
+   首页分组卡片
+   ============================================================ */
+.group-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:22px}
+
+.entry-card{
+  position:relative;overflow:hidden;display:flex;flex-direction:column;
+  background:var(--paper);
+  border:2px solid var(--jade-900);
+  border-radius:var(--r-xl);
+  padding:30px 26px 0;cursor:pointer;
+  box-shadow:var(--shadow-1);
+  transition:transform .18s ease, box-shadow .18s ease;
+}
+.entry-card:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow-2)}
+.entry-card:active{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--jade-900)}
+/* 顶部斜条纹（barber pole） */
+.entry-card::before{
+  content:"";position:absolute;left:0;right:0;top:0;height:10px;
+  background:repeating-linear-gradient(45deg,
+    var(--jade-700) 0 10px, var(--jade-600) 10px 20px);
+  border-bottom:2px solid var(--jade-900);
+}
+.entry-card.ctrl::before{
+  background:repeating-linear-gradient(45deg,
+    #798B66 0 10px, #8C9E78 10px 20px);
+}
+.card-idx{
+  position:absolute;right:16px;top:22px;
+  font-family:var(--font-display);
+  font-size:54px;font-weight:700;letter-spacing:-2px;line-height:1;
+  color:rgba(224,163,46,.42);user-select:none;transition:.2s;
+}
+.entry-card:hover .card-idx{color:var(--mustard)}
+
+.ec-head{display:flex;align-items:center;gap:14px;position:relative;z-index:1;margin-top:14px}
+.ec-bear{
+  --bear-face:var(--mustard);--bear-ink:var(--jade-900);--bear-inner:rgba(255,255,255,.5);
+  width:56px;height:56px;flex:0 0 56px;border-radius:8px;
+  display:grid;place-items:center;
+  background:var(--jade-700);
+  border:2px solid var(--jade-900);
+  box-shadow:3px 3px 0 var(--jade-900);
+  transition:.2s;
+}
+.ec-bear .bear{font-size:34px;color:#fff;--bear-face:var(--mustard);--bear-ink:var(--jade-900)}
+.entry-card:hover .ec-bear .bear{animation:wiggle .6s ease}
+@keyframes wiggle{0%,100%{transform:rotate(0)}28%{transform:rotate(-7deg)}66%{transform:rotate(6deg)}}
+.entry-card.ctrl .ec-bear{background:var(--brick);border-color:var(--jade-900)}
+.entry-card.ctrl .ec-bear .bear{--bear-face:var(--brick-soft)}
+
+.ec-title h3{
+  font-family:var(--font-display);
+  font-size:21px;font-weight:700;letter-spacing:1px;color:var(--jade-900);
+}
+.ec-sub{font-size:11.5px;color:var(--muted);margin-top:3px;letter-spacing:.8px}
+.ec-desc{
+  margin:16px 0 18px;color:var(--ink-2);font-size:13px;line-height:1.85;
+  position:relative;z-index:1;flex:1;
+}
+
+/* 能力分布条 */
+.dist{
+  display:flex;gap:0;height:9px;margin-bottom:16px;position:relative;z-index:1;
+  border:1.5px solid var(--jade-900);background:var(--paper-2);
+}
+.dist i{display:block;height:100%;transition:flex-grow .4s}
+.dist i + i{border-left:1.5px solid var(--jade-900)}
+.dist .low{background:var(--jade-300)}
+.dist .mid{background:var(--jade-600)}
+.dist .high{background:var(--jade-900)}
+.dist .flat{background:#A9B896}
+
+.ec-chips{display:flex;flex-wrap:wrap;gap:7px;position:relative;z-index:1}
+.chip{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:11.5px;font-weight:600;color:var(--jade-900);
+  background:var(--paper-2);
+  border:1.5px solid var(--jade-800);
+  padding:4px 10px;border-radius:2px;
+  transition:.15s;
+}
+.chip s{width:7px;height:7px;display:block;text-decoration:none;border:1px solid rgba(16,40,31,.35)}
+.chip b{color:var(--jade-900);font-variant-numeric:tabular-nums;font-size:12.5px}
+.chip .c-low{background:var(--jade-300)}
+.chip .c-mid{background:var(--jade-600)}
+.chip .c-high{background:var(--jade-900)}
+
+.ec-foot{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  margin:20px -26px 0;padding:14px 26px;
+  background-color:var(--jade-800);
+  background-image:/n    repeating-linear-gradient(0deg, rgba(251,245,231,.055) 0 1px, transparent 1px 9px),
+    repeating-linear-gradient(90deg, rgba(251,245,231,.055) 0 1px, transparent 1px 9px);
+  border-top:2px solid var(--jade-900);
+  font-size:12.5px;color:var(--paper);position:relative;z-index:1;
+  letter-spacing:.3px;
+}
+.ec-foot b{
+  font-family:var(--font-display);
+  font-size:16px;color:var(--mustard);font-variant-numeric:tabular-nums;
+}
+.go{
+  width:34px;height:34px;border-radius:50%;display:grid;place-items:center;
+  background:var(--mustard);color:var(--jade-900);font-size:15px;flex:0 0 34px;
+  border:2px solid var(--jade-900);
+  box-shadow:2px 2px 0 var(--jade-900);
+  transition:transform .2s;
+}
+.entry-card:hover .go{transform:translateX(4px)}
+.entry-card.ctrl .go{background:var(--brick);color:#fff}
+
+/* ============================================================
+   能力组卡片
+   ============================================================ */
+.tier-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.tier-card{
+  position:relative;display:flex;flex-direction:column;
+  background:var(--paper);
+  border:2px solid var(--jade-900);
+  border-radius:var(--r-xl);
+  cursor:pointer;
+  box-shadow:var(--shadow-1);
+  transition:transform .18s ease, box-shadow .18s ease;
+}
+.tier-card:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow-2)}
+
+.tier-cap{
+  position:relative;height:100px;overflow:hidden;
+  border-bottom:2px solid var(--jade-900);
+  background:
+    repeating-linear-gradient(45deg, rgba(255,255,255,.09) 0 11px, rgba(255,255,255,0) 11px 22px),
+    linear-gradient(135deg, var(--acc-mid) 0%, var(--acc-deep) 100%);
+}
+.tier-cap::after{
+  content:"";position:absolute;right:14px;bottom:10px;width:34px;height:34px;
+  background:var(--pop);opacity:.9;
+  clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+}
+.cap-idx{
+  position:absolute;right:16px;top:8px;
+  font-family:var(--font-display);
+  font-size:44px;font-weight:700;letter-spacing:-2px;line-height:1;
+  color:rgba(255,255,255,.35);user-select:none;
+}
+.cap-bear{
+  --bear-face:#fff;--bear-ink:var(--jade-900);--bear-inner:rgba(255,255,255,.5);
+  position:absolute;left:20px;top:100px;transform:translateY(-50%);
+  width:62px;height:62px;border-radius:50%;
+  display:grid;place-items:center;color:#fff;
+  background:var(--paper);
+  border:2.5px solid var(--jade-900);
+  box-shadow:3px 3px 0 var(--jade-900);
+  z-index:3;
+  transition:transform .18s cubic-bezier(.2,.75,.3,1);
+}
+.cap-bear .bear{font-size:38px;--bear-face:var(--pop);--bear-ink:var(--jade-900);--bear-inner:rgba(255,255,255,.6);color:var(--jade-700)}
+.tier-card:hover .cap-bear{transform:translateY(-50%) scale(1.04)}
+.tier-card:hover .cap-bear .bear{animation:wiggle .6s ease}
+
+.tier-body{padding:40px 22px 0;display:flex;flex-direction:column;flex:1}
+.tier-title-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.tier-card h3{
+  font-family:var(--font-display);
+  font-size:19px;font-weight:700;letter-spacing:.8px;color:var(--jade-900);
+}
+.perm{
+  font-size:10.5px;font-weight:700;letter-spacing:.6px;
+  color:var(--jade-900);background:var(--pop);
+  border:1.5px solid var(--jade-900);
+  padding:2px 8px;border-radius:2px;white-space:nowrap;
+}
+.tier-rule{margin-top:12px;font-size:12.5px;line-height:1.85;color:var(--ink-2)}
+.tier-focus{
+  margin-top:14px;padding:12px 13px;
+  background:var(--acc-soft);
+  border:1.5px solid var(--jade-800);
+  border-left:5px solid var(--pop);
+  font-size:12px;line-height:1.75;color:var(--jade-900);
+  display:flex;gap:9px;flex:1;
+}
+.tier-focus .fbar{display:none}
+.tier-foot{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  margin:18px -22px 0;padding:13px 22px;
+  background:var(--paper-2);
+  border-top:2px solid var(--jade-900);
+  font-size:12px;font-weight:700;color:var(--jade-900);
+  border-radius:0 0 8px 8px;
+}
+.tier-foot .go{
+  width:28px;height:28px;flex-basis:28px;font-size:13px;
+  background:var(--pop);box-shadow:2px 2px 0 var(--jade-900);
+}
+.tier-card:hover .go{transform:translateX(4px)}
+
+/* ============================================================
+   成绩面板
+   ============================================================ */
+.panel{
+  background:var(--paper);
+  border:2px solid var(--jade-900);
+  border-radius:var(--r-xl);
+  box-shadow:var(--shadow-1);
+  padding:24px 22px 20px;
+  position:relative;
+}
+.panel-head{
+  display:flex;align-items:center;justify-content:space-between;gap:22px;flex-wrap:wrap;
+  padding-bottom:18px;border-bottom:2px dashed var(--line-2);
+}
+.ph-id{display:flex;align-items:center;gap:14px;min-width:0}
+.ph-bear{
+  --bear-face:var(--pop);--bear-ink:var(--jade-900);--bear-inner:rgba(255,255,255,.6);
+  width:58px;height:58px;flex:0 0 58px;border-radius:8px;
+  display:grid;place-items:center;
+  background:var(--acc-soft);
+  border:2px solid var(--jade-900);
+  box-shadow:3px 3px 0 var(--jade-900);
+  color:var(--jade-700);
+}
+.ph-bear .bear{font-size:36px}
+.ph-eyebrow{
+  font-size:10.5px;font-weight:700;letter-spacing:1.8px;
+  color:var(--brick);text-transform:uppercase;
+}
+.panel-head h2{
+  font-family:var(--font-display);
+  font-size:22px;font-weight:700;letter-spacing:1px;margin-top:2px;color:var(--jade-900);
+}
+
+.metrics{
+  display:flex;align-items:center;gap:0;
+  background:var(--paper-2);
+  border:2px solid var(--jade-800);
+  border-radius:4px;padding:8px 4px;
+}
+.metric{padding:2px 18px;text-align:center;min-width:86px}
+.metric b{
+  display:block;font-family:var(--font-display);
+  font-size:20px;line-height:1.3;font-weight:700;
+  color:var(--jade-900);font-variant-numeric:tabular-nums;
+}
+.metric span{font-size:10.5px;color:var(--muted);letter-spacing:.8px}
+.m-div{width:2px;height:30px;background:var(--line-2)}
+
+/* 说明 */
+.note{
+  position:relative;margin:18px 0 16px;padding:15px 18px 15px 20px;
+  background:var(--paper-2);
+  border:2px solid var(--jade-800);
+  border-left:7px solid var(--brick);
+  border-radius:4px;
+}
+.note-rule{font-size:13.5px;line-height:1.85;color:var(--ink-2)}
+.note-focus{
+  margin-top:9px;padding-top:9px;
+  border-top:1.5px dashed var(--line-2);
+  font-size:13.5px;line-height:1.8;color:var(--jade-900);font-weight:700;
+}
+.note-focus::before{display:none}
+
+/* 工具栏 */
+.toolbar{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:14px}
+.btn{
+  border:2px solid var(--jade-900);
+  background:var(--paper);
+  color:var(--jade-900);
+  font-size:13px;font-weight:700;letter-spacing:.3px;
+  padding:8px 16px;border-radius:4px;
+  cursor:pointer;transition:.14s;white-space:nowrap;
+  display:inline-flex;align-items:center;gap:7px;
+  box-shadow:2px 2px 0 var(--jade-900);
+}
+.btn:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--jade-900);background:var(--paper-2)}
+.btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--jade-900)}
+.btn.primary{background:var(--mustard);border-color:var(--jade-900);color:var(--jade-900)}
+.btn.primary:hover{background:var(--mustard-deep);color:var(--jade-950)}
+.btn.primary .bear{
+  font-size:17px;color:var(--jade-900);
+  --bear-face:var(--mustard);--bear-ink:var(--jade-900);--bear-inner:rgba(255,255,255,.4);
+}
+.btn.danger{color:var(--brick);border-color:var(--brick)}
+.btn.danger:hover{background:var(--brick);color:#fff}
+.hint{margin-left:auto;font-size:11.5px;color:var(--muted);line-height:1.6}
+
+/* 表格 */
+.table-wrap{
+  overflow-x:auto;
+  border:2px solid var(--jade-900);
+  border-radius:6px;
+  background:var(--paper);
+  -webkit-overflow-scrolling:touch;
+}
+table.grid{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
+table.grid th,table.grid td{border-bottom:1px solid var(--line);border-right:1px solid var(--line)}
+table.grid tr>*:last-child{border-right:0}
+
+thead th{
+  background:var(--jade-800);
+  color:var(--paper);
+  border-bottom:2px solid var(--jade-900);
+  border-right-color:rgba(251,245,231,.16);
+}
+.corner,.row-label{
+  position:sticky;left:0;z-index:3;
+  background:var(--paper-2);
+  text-align:left;padding:13px 15px;
+  font-weight:700;color:var(--jade-900);
+  width:126px;min-width:126px;white-space:nowrap;
+}
+thead .corner{
+  z-index:4;background:var(--jade-900);color:var(--mustard);
+  font-size:10.5px;letter-spacing:1.6px;text-transform:uppercase;
+}
+.rn{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:21px;height:21px;margin-right:9px;
+  background:var(--jade-800);color:var(--paper);
+  font-size:10.5px;font-weight:700;
+  border-radius:2px;
+  vertical-align:1px;
+}
+
+.col-stu{min-width:140px;padding:8px 6px;text-align:center;background:var(--paper)}
+.stu-head{position:relative;display:flex;align-items:center}
+.name-input{
+  width:100%;border:0;background:transparent;outline:none;
+  font-family:var(--font-body);
+  font-size:13.5px;font-weight:700;color:var(--jade-900);
+  text-align:center;padding:7px 15px 7px 8px;border-radius:3px;transition:.15s;
+}
+.name-input:hover{background:var(--paper-2)}
+.name-input:focus{background:#fff;box-shadow:inset 0 0 0 2px var(--mustard)}
+.del-btn{
+  position:absolute;right:0;top:50%;transform:translateY(-50%);
+  width:18px;height:18px;border-radius:2px;border:0;
+  background:var(--line);color:var(--jade-800);
+  font-size:13px;line-height:1;cursor:pointer;opacity:0;transition:.15s;
+  padding:0;display:grid;place-items:center;
+}
+.col-stu:hover .del-btn{opacity:1}
+.del-btn:hover{background:var(--brick);color:#fff}
+
+td.num{padding:0}
+.score{
+  width:100%;border:0;background:transparent;outline:none;
+  font-family:var(--font-body);
+  font-size:14.5px;color:var(--ink);font-weight:600;
+  text-align:center;padding:12px 4px;
+  font-variant-numeric:tabular-nums;transition:background .12s,box-shadow .12s;
+  -moz-appearance:textfield;appearance:textfield;
+}
+.score::-webkit-outer-spin-button,
+.score::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.score::placeholder{color:#C6BFA6}
+tbody tr:hover td.num{background:#F7F1DE}
+tbody tr:hover .row-label{background:#EDE4CC}
+.score:focus{background:#FFF8E6;box-shadow:inset 0 0 0 2px var(--mustard)}
+
+tbody tr:last-child th,tbody tr:last-child td{border-bottom:2px solid var(--jade-900)}
+
+/* 平均分：芥末黄撞色 */
+tfoot th,tfoot td{
+  background:var(--mustard);
+  color:var(--jade-900);
+  border-top:2px solid var(--jade-900);
+  border-bottom:0;
+  border-right-color:rgba(16,40,31,.18);
+  font-weight:700;font-variant-numeric:tabular-nums;
+}
+tfoot td{text-align:center;padding:14px 4px;font-family:var(--font-display);font-size:15.5px}
+tfoot .corner{
+  background:var(--brick);color:var(--paper);
+  letter-spacing:1.4px;font-size:12px;font-family:var(--font-body);
+}
+tfoot td.na{color:rgba(16,40,31,.38);font-weight:500}
+
+.col-stu.placeholder{color:var(--muted);cursor:pointer;font-weight:500;background:var(--paper)}
+.col-stu.placeholder:hover{background:var(--paper-2)}
+.ph-name{
+  font-size:12.5px;color:var(--jade-800);
+  border-bottom:1.5px dashed var(--jade-400);
+  display:inline-block;padding:6px 12px;
+}
+td.ph{
+  color:#D3CCB4;text-align:center;padding:12px 4px;
+  background:repeating-linear-gradient(45deg,#FBF5E7,#FBF5E7 7px,#F6EEDA 7px,#F6EEDA 14px);
+}
+
+/* ============================================================
+   学生作业图片
+   ============================================================ */
+.pic-btn{
+  display:block;margin:6px auto 8px;padding:0;
+  width:46px;height:46px;border-radius:4px;cursor:pointer;
+  border:1.5px dashed var(--jade-500);background:var(--paper-2);
+  color:var(--jade-800);position:relative;overflow:visible;
+  transition:.15s;
+}
+.pic-btn:hover{border-style:solid;background:var(--mustard-soft);transform:translateY(-1px)}
+.pic-btn .cam{width:20px;height:20px;display:block;margin:0 auto}
+.pic-btn img{width:100%;height:100%;object-fit:cover;display:block;border-radius:2px}
+.pic-btn.has{border-style:solid;border-color:var(--jade-900);box-shadow:2px 2px 0 var(--jade-900)}
+.pic-cnt{
+  position:absolute;right:-7px;top:-7px;min-width:18px;height:18px;padding:0 4px;
+  border-radius:2px;background:var(--brick);color:#fff;
+  font-size:10.5px;font-weight:700;line-height:18px;text-align:center;
+  border:1.5px solid var(--jade-900);
+}
+.pic-badge{display:none}
+
+/* 弹层 */
+.modal{
+  position:fixed;inset:0;z-index:120;display:none;align-items:center;justify-content:center;
+  padding:18px;background:rgba(16,40,31,.62);
+  -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);
+}
+.modal[data-open="1"]{display:flex;animation:mFade .18s ease}
+@keyframes mFade{from{opacity:0}to{opacity:1}}
+.modal-card{
+  width:min(540px,100%);max-height:min(84vh,740px);overflow:auto;
+  background:var(--paper);
+  border:2px solid var(--jade-900);
+  border-radius:8px;padding:20px;
+  box-shadow:8px 8px 0 var(--jade-950);
+  animation:mPop .22s cubic-bezier(.2,.8,.3,1);
+}
+@keyframes mPop{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.modal-head{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding-bottom:14px;border-bottom:2px dashed var(--line-2);
+}
+.mh-left{display:flex;align-items:center;gap:11px;min-width:0}
+.mh-bear{
+  width:42px;height:42px;flex:0 0 42px;border-radius:6px;display:grid;place-items:center;
+  background:var(--jade-700);color:#fff;
+  border:2px solid var(--jade-900);
+  --bear-face:var(--mustard);--bear-ink:var(--jade-900);
+}
+.mh-bear .bear{font-size:26px}
+.modal-head h3{
+  font-family:var(--font-display);
+  font-size:17px;font-weight:700;letter-spacing:.5px;color:var(--jade-900);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.modal-head p{font-size:11.5px;color:var(--muted);margin-top:1px}
+.mh-close{
+  width:30px;height:30px;flex:0 0 30px;border-radius:4px;
+  border:2px solid var(--jade-900);background:var(--paper);
+  color:var(--jade-900);font-size:16px;line-height:1;
+  cursor:pointer;display:grid;place-items:center;transition:.14s;
+}
+.mh-close:hover{background:var(--brick);color:#fff;border-color:var(--brick-deep)}
+
+.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0}
+.photo-item{
+  position:relative;aspect-ratio:1;border-radius:3px;overflow:hidden;
+  border:2px solid var(--jade-900);cursor:zoom-in;background:var(--paper-2);
+  transition:.16s;
+}
+.photo-item img{width:100%;height:100%;object-fit:cover;display:block}
+.photo-item:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--jade-900)}
+.photo-del{
+  position:absolute;right:4px;top:4px;width:22px;height:22px;border-radius:2px;
+  border:1.5px solid var(--jade-900);background:var(--brick);color:#fff;
+  font-size:14px;line-height:1;cursor:pointer;
+  display:grid;place-items:center;padding:0;transition:.14s;
+}
+.photo-del:hover{background:var(--brick-deep)}
+.photo-empty{
+  grid-column:1/-1;text-align:center;padding:26px 10px;color:var(--muted);font-size:12.5px;
+  background:repeating-linear-gradient(45deg,#FBF5E7,#FBF5E7 7px,#F6EEDA 7px,#F6EEDA 14px);
+  border:1.5px dashed var(--line-2);border-radius:3px;
+}
+.pic-add-btn{
+  width:100%;padding:13px;border-radius:4px;cursor:pointer;
+  border:2px solid var(--jade-900);background:var(--mustard);
+  color:var(--jade-900);font-size:13px;font-weight:700;letter-spacing:.4px;
+  display:flex;align-items:center;justify-content:center;gap:8px;transition:.16s;
+  box-shadow:2px 2px 0 var(--jade-900);
+}
+.pic-add-btn:hover{background:var(--mustard-deep);transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--jade-900)}
+.modal-tip{margin-top:11px;font-size:11px;color:var(--muted);text-align:center;line-height:1.7}
+
+.viewer{
+  position:fixed;inset:0;z-index:130;display:none;align-items:center;justify-content:center;
+  background:rgba(11,31,23,.94);padding:14px;cursor:zoom-out;
+}
+.viewer[data-open="1"]{display:flex;animation:mFade .16s ease}
+.viewer img{
+  max-width:100%;max-height:100%;border-radius:4px;
+  border:2px solid var(--paper);
+  box-shadow:0 24px 70px rgba(0,0,0,.55);
+}
+
+/* ============================================================
+   安装按钮
+   ============================================================ */
+.install-fab{
+  position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom));z-index:80;
+  display:none;align-items:center;gap:9px;
+  padding:12px 18px;border-radius:4px;
+  border:2px solid var(--jade-900);cursor:pointer;
+  background:var(--brick);color:#fff;
+  font-size:13px;font-weight:700;letter-spacing:.6px;
+  box-shadow:4px 4px 0 var(--jade-900);
+  transition:transform .16s, box-shadow .16s;
+}
+.install-fab[data-show="1"]{display:flex}
+.install-fab:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--jade-900)}
+.install-fab:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--jade-900)}
+.install-fab .bear{font-size:18px;color:#fff;--bear-face:var(--brick-soft);--bear-ink:var(--brick-deep)}
+
+/* ============================================================
+   响应式
+   ============================================================ */
+@media (max-width:1000px){
+  .group-grid{grid-template-columns:1fr}
+  .tier-grid{grid-template-columns:1fr}
+  .bear-stack{display:none}
+  .hint{margin-left:0;flex-basis:100%}
+}
+@media (max-width:680px){
+  .topbar-inner,.crumbs,.wrap,.foot{padding-left:16px;padding-right:16px}
+  .brand-txt h1{font-size:14.5px;white-space:normal;line-height:1.3}
+  .brand-txt p{display:none}
+  .top-tags .tag:not(.solid){display:none}
+  .hero h2{font-size:22px}
+  .hero{margin:20px 0 18px}
+  .panel{padding:16px 14px 14px}
+  .panel-head{gap:14px}
+  .metrics{width:100%;justify-content:space-between;padding:7px 2px}
+  .metric{min-width:0;flex:1;padding:2px 6px}
+  .metric b{font-size:18px}
+  .corner,.row-label{width:98px;min-width:98px;padding:11px 10px;font-size:12.5px}
+  .col-stu{min-width:116px}
+  .ec-foot,.tier-foot{margin-left:-14px;margin-right:-14px;padding-left:14px;padding-right:14px}
+  .tier-body{padding-left:16px;padding-right:16px}
+  .score,.name-input{font-size:16px}
+  .card-idx{font-size:42px;top:26px}
+  .entry-card{padding:28px 18px 0}
+  .ec-foot{margin-left:-18px;margin-right:-18px;padding-left:18px;padding-right:18px}
+}
+@media (hover:none){
+  .del-btn{opacity:1}
+}
+
+</style>
+</head>
+<body>
+
+<!-- 小熊图标定义 -->
+<svg class="bear-def" aria-hidden="true" focusable="false">
+  <symbol id="bear" viewBox="0 0 48 48">
+    <circle cx="12.6" cy="14.4" r="8.1" fill="currentColor"/>
+    <circle cx="35.4" cy="14.4" r="8.1" fill="currentColor"/>
+    <circle cx="12.6" cy="14.4" r="3.8" fill="var(--bear-inner,#7ecbaa)"/>
+    <circle cx="35.4" cy="14.4" r="3.8" fill="var(--bear-inner,#7ecbaa)"/>
+    <circle cx="24" cy="27" r="15.2" fill="currentColor"/>
+    <ellipse cx="24" cy="32.4" rx="9.2" ry="7.9" fill="var(--bear-face,#f7f0e4)"/>
+    <circle cx="18.3" cy="24.5" r="2.05" fill="var(--bear-ink,#0a4334)"/>
+    <circle cx="29.7" cy="24.5" r="2.05" fill="var(--bear-ink,#0a4334)"/>
+    <ellipse cx="24" cy="29.6" rx="3" ry="2.2" fill="var(--bear-ink,#0a4334)"/>
+    <path d="M24 31.7v1.9M24 33.6c0 1.5-2.4 2-3.7.7M24 33.6c0 1.5 2.4 2 3.7.7"
+          fill="none" stroke="var(--bear-ink,#0a4334)" stroke-width="1.25" stroke-linecap="round"/>
+  </symbol>
+</svg>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <div class="logo"><svg class="bear"><use href="#bear"/></svg></div>
+      <div class="brand-txt">
+        <h1>高职应用文写作AIGC分层干预教学</h1>
+        <p>Teaching Workbench</p>
+      </div>
+    </div>
+    <div class="top-tags">
+      <span class="tag"><i></i>实验组 · 对照组</span>
+      <span class="tag solid"><i></i>五次测试</span>
+    </div>
+  </div>
+</header>
+
+<div class="crumbs" id="crumbs"></div>
+<main class="wrap" id="view"></main>
+<footer class="foot">
+  <svg class="bear"><use href="#bear"/></svg>
+  <span>数据仅保存在本机浏览器中，用于教学实验记录。清理浏览器数据前请先导出 CSV 备份。</span>
+</footer>
+
+<button class="install-fab" id="installFab" type="button">
+  <svg class="bear"><use href="#bear"/></svg>
+  <span>安装到手机</span>
+</button>
+
+<!-- 作业图片弹层 -->
+<div class="modal" id="photoModal" data-open="0">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-label="学生作业图片">
+    <div class="modal-head">
+      <div class="mh-left">
+        <div class="mh-bear"><svg class="bear"><use href="#bear"/></svg></div>
+        <div>
+          <h3 id="photoTitle">作业图片</h3>
+          <p id="photoSub">0 张</p>
+        </div>
+      </div>
+      <button class="mh-close" data-act="pic-close" title="关闭">×</button>
+    </div>
+    <div class="photo-grid" id="photoGrid"></div>
+    <button class="pic-add-btn" data-act="pic-add">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <path d="M12 5v14M5 12h14"/>
+      </svg>
+      添加图片
+    </button>
+    <p class="modal-tip">可拍照或从相册选择，自动压缩后保存在本机浏览器；每位学生最多 9 张。</p>
+  </div>
+</div>
+
+<div class="viewer" id="imageViewer" data-open="0">
+  <img id="viewerImg" alt="作业图片">
+</div>
+
+<input type="file" id="photoInput" accept="image/*" multiple hidden>
+
+<script>
+/* ================= 配置 ================= */
+const CONFIG = {
+  expLow: {
+    key:'expLow', name:'低能力组', tag:'低', idx:'01', theme:'low', part:'实验组', perm:'格式校对',
+    rule:'低能力组仅允许使用AIGC格式校对功能，采用“手写框架→AI查错”模式。',
+    focus:'教学重点在于帮助学生掌握应用文的基本格式和核心要素。'
+  },
+  expMid: {
+    key:'expMid', name:'中能力组', tag:'中', idx:'02', theme:'mid', part:'实验组', perm:'句式优化',
+    rule:'中能力组允许使用句式优化权限，进行“AI生成初稿→人工降级改写”训练。',
+    focus:'教学重点在于提高学生的语言表达能力和内容组织能力。'
+  },
+  expHigh: {
+    key:'expHigh', name:'高能力组', tag:'高', idx:'03', theme:'high', part:'实验组', perm:'内容生成',
+    rule:'高能力组允许使用内容生成权限，开展“AI生成对立观点→批判重构”活动。',
+    focus:'教学重点在于培养学生的创新思维和批判思维能力。'
+  },
+  control: {
+    key:'control', name:'对照组', tag:'对', idx:'02', theme:'ctrl', part:'对照组', perm:'常规教学',
+    rule:'对照组采用常规教学方式，不进行 AIGC 分层干预，按统一教学要求完成五次写作测试。',
+    focus:'教学重点在于按照原有教学计划完成写作训练与讲评。'
+  }
+};
+const TIERS = ['expLow','expMid','expHigh'];
+const TESTS = ['第一次','第二次','第三次','第四次','第五次'];
+const LS_KEY = 'aigc-applied-writing-workbench-v1';
+const MAX_PHOTOS = 9;
+const CAM_ICON = '<svg class="cam" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.6A2.6 2.6 0 0 1 5.6 6h1.6l1.2-2.1h7.2L16.8 6h1.6A2.6 2.6 0 0 1 21 8.6v8.8A2.6 2.6 0 0 1 18.4 20H5.6A2.6 2.6 0 0 1 3 17.4z"/><circle cx="12" cy="12.6" r="3.3"/></svg>';
+
+/* ================= 数据 ================= */
+function blank(){
+  const o = {};
+  Object.keys(CONFIG).forEach(k => o[k] = []);
+  return o;
+}
+function uid(){
+  return Date.now().toString(36) + Math.random().toString(36).slice(2,7);
+}
+function loadStore(){
+  const out = blank();
+  try{
+    const raw = localStorage.getItem(LS_KEY);
+    if(!raw) return out;
+    const d = JSON.parse(raw);
+    Object.keys(out).forEach(k => {
+      if(!Array.isArray(d[k])) return;
+      out[k] = d[k].filter(s => s && typeof s === 'object').map(s => ({
+        id: s.id || uid(),
+        name: String(s.name == null ? '学生' : s.name).slice(0,12) || '学生',
+        scores: Array.from({length:5}, (_,i) => {
+          const v = s.scores ? s.scores[i] : null;
+          return (v === null || v === undefined || v === '' || isNaN(Number(v))) ? null : Number(v);
+        }),
+        photos: Array.isArray(s.photos) ? s.photos.filter(p => typeof p === 'string' && p).slice(0,9) : []
+      }));
+    });
+  }catch(e){}
+  return out;
+}
+function save(){
+  try{ localStorage.setItem(LS_KEY, JSON.stringify(store)); return true; }
+  catch(e){ return false; }
+}
+
+let store = loadStore();
+let route = { view:'home', group:null };
+
+/* ================= 工具 ================= */
+const root = document.getElementById('view');
+const crumbsEl = document.getElementById('crumbs');
+
+function esc(s){
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function avgOf(stu){
+  const vals = stu.scores.filter(v => v !== null && v !== undefined && !isNaN(v));
+  if(!vals.length) return null;
+  return vals.reduce((a,b) => a + b, 0) / vals.length;
+}
+function groupStats(key){
+  const list = store[key] || [];
+  let sum = 0, n = 0;
+  list.forEach(s => s.scores.forEach(v => {
+    if(v !== null && v !== undefined && !isNaN(v)){ sum += v; n++; }
+  }));
+  return { count:list.length, filled:n, total:list.length * 5, avg: n ? sum / n : null };
+}
+function findStu(key, id){
+  return (store[key] || []).find(s => s.id === id) || null;
+}
+/* 兼容早期没有 photos 字段的数据 */
+function photosOf(stu){
+  if(!Array.isArray(stu.photos)) stu.photos = [];
+  return stu.photos;
+}
+function fmt(v){ return v === null || v === undefined ? '—' : v.toFixed(1); }
+function bear(cls){
+  return `<svg class="bear ${cls || ''}"><use href="#bear"/></svg>`;
+}
+
+/* ================= 首页 ================= */
+function viewHome(){
+  const l = store.expLow.length, m = store.expMid.length, hi = store.expHigh.length;
+  const expN = l + m + hi;
+  const ctrlN = store.control.length;
+  const avgList = TIERS.map(k => groupStats(k).avg).filter(v => v !== null);
+  const expAvg = avgList.length ? avgList.reduce((a,b) => a + b, 0) / avgList.length : null;
+  const ctrlAvg = groupStats('control').avg;
+  const g = v => Math.max(v, 0.35);
+
+  return `
+  <section class="hero">
+    <div class="hero-copy">
+      <span class="eyebrow">教学实验 · 数据工作台</span>
+      <h2>选择研究分组</h2>
+      <p>实验组按能力分层实施差异化 AIGC 干预，对照组采用常规教学。进入分组后可记录五次写作测试成绩，系统自动计算个人平均分与组内平均分。</p>
+    </div>
+    <div class="bear-stack" aria-hidden="true">
+      <span class="bs b3">${bear()}</span>
+      <span class="bs b2">${bear()}</span>
+      <span class="bs b1">${bear()}</span>
+    </div>
+  </section>
+
+  <div class="group-grid">
+    <article class="entry-card" data-act="go-exp">
+      <span class="card-idx">01</span>
+      <div class="ec-head">
+        <div class="ec-bear">${bear()}</div>
+        <div class="ec-title">
+          <h3>实验组</h3>
+          <div class="ec-sub">分层干预 · 三个能力组</div>
+        </div>
+      </div>
+      <p class="ec-desc">依据应用文写作能力水平分为低、中、高三个能力组，分别配置不同的 AIGC 使用权限与训练模式，实施精准干预。</p>
+      <div class="dist">
+        <i class="low" style="flex-grow:${g(l)}"></i>
+        <i class="mid" style="flex-grow:${g(m)}"></i>
+        <i class="high" style="flex-grow:${g(hi)}"></i>
+      </div>
+      <div class="ec-chips">
+        <span class="chip"><s class="c-low"></s>低能力组 <b>${l}</b></span>
+        <span class="chip"><s class="c-mid"></s>中能力组 <b>${m}</b></span>
+        <span class="chip"><s class="c-high"></s>高能力组 <b>${hi}</b></span>
+      </div>
+      <div class="ec-foot">
+        <span>共 <b>${expN}</b> 名学生${expAvg === null ? '' : ' · 平均 ' + fmt(expAvg) + ' 分'}</span>
+        <span class="go">→</span>
+      </div>
+    </article>
+
+    <article class="entry-card ctrl" data-act="go-group" data-group="control">
+      <span class="card-idx">02</span>
+      <div class="ec-head">
+        <div class="ec-bear">${bear()}</div>
+        <div class="ec-title">
+          <h3>对照组</h3>
+          <div class="ec-sub">常规教学 · 无分层干预</div>
+        </div>
+      </div>
+      <p class="ec-desc">采用常规教学方式组织应用文写作教学，不进行 AIGC 分层干预，按统一进度完成五次写作测试，作为实验组的效果参照。</p>
+      <div class="dist"><i class="flat" style="flex-grow:1"></i></div>
+      <div class="ec-chips">
+        <span class="chip"><s style="background:#9dbdb0"></s>学生 <b>${ctrlN}</b></span>
+        <span class="chip"><s style="background:#9dbdb0"></s>测试 <b>5</b> 次</span>
+        ${ctrlAvg === null ? '' : `<span class="chip"><s style="background:#9dbdb0"></s>平均 <b>${fmt(ctrlAvg)}</b> 分</span>`}
+      </div>
+      <div class="ec-foot">
+        <span>进入成绩表</span>
+        <span class="go">→</span>
+      </div>
+    </article>
+  </div>`;
+}
+
+/* ================= 实验组分层 ================= */
+function tierCard(key){
+  const g = CONFIG[key];
+  const st = groupStats(key);
+  return `
+  <article class="tier-card theme-${g.theme}" data-act="go-group" data-group="${key}">
+    <div class="tier-cap">
+      <span class="cap-idx">${g.idx}</span>
+    </div>
+    <div class="cap-bear">${bear()}</div>
+    <div class="tier-body">
+      <div class="tier-title-row">
+        <h3>${g.name}</h3>
+        <span class="perm">${g.perm}</span>
+      </div>
+      <p class="tier-rule">${g.rule}</p>
+      <div class="tier-focus">
+        <span class="fbar"></span>
+        <span>${g.focus}</span>
+      </div>
+      <div class="tier-foot">
+        <span>${st.count} 人 · 进入五次测试成绩表</span>
+        <span class="go">→</span>
+      </div>
+    </div>
+  </article>`;
+}
+function viewTiers(){
+  return `
+  <section class="hero">
+    <div class="hero-copy">
+      <button class="link" data-act="home">← 返回首页</button>
+      <h2>实验组 · 能力分层</h2>
+      <p>实验组按能力水平分为低能力组、中能力组、高能力组三个子组，各组配置不同的 AIGC 使用权限与教学策略。点击任一能力组查看其五次测试成绩表。</p>
+    </div>
+    <div class="bear-stack" aria-hidden="true">
+      <span class="bs b3">${bear()}</span>
+      <span class="bs b2">${bear()}</span>
+      <span class="bs b1">${bear()}</span>
+    </div>
+  </section>
+  <div class="tier-grid">
+    ${TIERS.map(tierCard).join('')}
+  </div>`;
+}
+
+/* ================= 成绩表 ================= */
+function viewTable(key){
+  const g = CONFIG[key];
+  const list = store[key];
+  const st = groupStats(key);
+  const empty = list.length === 0;
+
+  let head, body, foot;
+
+  const CAM = CAM_ICON;
+
+  if(empty){
+    head = `<th class="col-stu placeholder" data-act="add" title="点击添加姓名"><span class="ph-name">＋ 添加姓名</span></th>`;
+    body = TESTS.map((t,i) => `
+      <tr>
+        <th class="row-label"><span class="rn">${i+1}</span>${t}</th>
+        <td class="ph">—</td>
+      </tr>`).join('');
+    foot = `<td class="ph">—</td>`;
+  }else{
+    head = list.map(s => `
+      <th class="col-stu">
+        <div class="stu-head">
+          <input class="name-input" data-id="${s.id}" value="${esc(s.name)}" maxlength="12" aria-label="学生姓名">
+          <button class="del-btn" data-act="del" data-id="${s.id}" title="删除该学生">×</button>
+        </div>
+        <button class="pic-btn ${(s.photos || []).length ? 'has' : ''}" data-act="pic-open" data-id="${s.id}"
+                title="${(s.photos || []).length ? '查看 / 添加作业图片' : '添加作业图片'}" aria-label="作业图片">
+          ${(s.photos || []).length ? `<img src="${s.photos[0]}" alt="作业图片">` : CAM}
+          ${(s.photos || []).length > 1 ? `<span class="pic-cnt">${s.photos.length}</span>` : ''}
+        </button>
+      </th>`).join('');
+
+    body = TESTS.map((t,i) => `
+      <tr>
+        <th class="row-label"><span class="rn">${i+1}</span>${t}</th>
+        ${list.map(s => `<td class="num"><input class="score" data-id="${s.id}" data-idx="${i}" type="number" min="0" max="100" step="1"
+          value="${s.scores[i] === null ? '' : s.scores[i]}" placeholder="—" aria-label="${esc(s.name)} ${t}成绩"></td>`).join('')}
+      </tr>`).join('');
+
+    foot = list.map(s => {
+      const a = avgOf(s);
+      return `<td data-avg-id="${s.id}" class="${a === null ? 'na' : ''}">${fmt(a)}</td>`;
+    }).join('');
+  }
+
+  return `
+  <section class="panel theme-${g.theme}">
+    <div class="panel-head">
+      <div class="ph-id">
+        <div class="ph-bear">${bear()}</div>
+        <div>
+          <div class="ph-eyebrow">${g.part} · ${g.perm}</div>
+          <h2>${g.name}</h2>
+        </div>
+      </div>
+      <div class="metrics">
+        <div class="metric"><b data-stat="count">${st.count}</b><span>人数</span></div>
+        <div class="m-div"></div>
+        <div class="metric"><b data-stat="filled">${st.filled}/${st.total}</b><span>已录成绩</span></div>
+        <div class="m-div"></div>
+        <div class="metric"><b data-stat="avg">${fmt(st.avg)}</b><span>组平均分</span></div>
+      </div>
+    </div>
+
+    <div class="note">
+      <p class="note-rule">${g.rule}</p>
+      <p class="note-focus">${g.focus}</p>
+    </div>
+
+    <div class="toolbar">
+      <button class="btn primary" data-act="add">${bear()}添加姓名</button>
+      <button class="btn" data-act="export">导出 CSV</button>
+      <button class="btn danger" data-act="clear">清空本组</button>
+      <span class="hint">表头姓名可直接修改；分数 0–100，留空视为未参加；表末自动汇总平均分。</span>
+    </div>
+
+    <div class="table-wrap">
+      <table class="grid">
+        <thead><tr><th class="corner">测试轮次</th>${head}</tr></thead>
+        <tbody>${body}</tbody>
+        <tfoot><tr><th class="corner">平均分</th>${foot}</tr></tfoot>
+      </table>
+    </div>
+  </section>`;
+}
+
+/* ================= 面包屑 ================= */
+function updateCrumb(){
+  const r = route;
+  let items;
+  if(r.view === 'home'){
+    items = [{ t:'首页' }];
+  }else if(r.view === 'tiers'){
+    items = [{ t:'首页', act:'home' }, { t:'实验组' }];
+  }else if(r.group === 'control'){
+    items = [{ t:'首页', act:'home' }, { t:'对照组' }];
+  }else{
+    items = [{ t:'首页', act:'home' }, { t:'实验组', act:'go-exp' }, { t:CONFIG[r.group].name }];
+  }
+  crumbsEl.innerHTML = items.map((it,i) => {
+    const last = i === items.length - 1;
+    if(last) return `<span class="cur">${it.t}</span>`;
+    return `<a data-act="${it.act}">${it.t}</a><span class="sep">/</span>`;
+  }).join('');
+}
+
+/* ================= 渲染 ================= */
+function render(){
+  if(route.view === 'home') root.innerHTML = viewHome();
+  else if(route.view === 'tiers') root.innerHTML = viewTiers();
+  else root.innerHTML = viewTable(route.group);
+  updateCrumb();
+  window.scrollTo({ top:0, behavior:'smooth' });
+}
+function go(view, group){
+  route = { view, group: group || null };
+  render();
+}
+
+/* ================= 局部刷新 ================= */
+function refreshTotals(key){
+  const list = store[key] || [];
+  list.forEach(s => {
+    const td = root.querySelector(`td[data-avg-id="${s.id}"]`);
+    if(!td) return;
+    const a = avgOf(s);
+    td.textContent = fmt(a);
+    td.className = a === null ? 'na' : '';
+  });
+  const st = groupStats(key);
+  const c = root.querySelector('[data-stat="count"]');
+  const f = root.querySelector('[data-stat="filled"]');
+  const a = root.querySelector('[data-stat="avg"]');
+  if(c) c.textContent = st.count;
+  if(f) f.textContent = st.filled + '/' + st.total;
+  if(a) a.textContent = fmt(st.avg);
+}
+
+/* ================= 操作 ================= */
+function addStudent(key){
+  const list = store[key];
+  let n = list.length + 1;
+  let name;
+  do{ name = '学生' + n++; } while(list.some(s => s.name === name));
+  const stu = { id: uid(), name, scores:[null,null,null,null,null], photos: [] };
+  list.push(stu);
+  save(); render();
+
+  const inp = root.querySelector('.name-input[data-id="' + stu.id + '"]');
+  if(inp){ inp.focus(); inp.select(); }
+  const wrap = root.querySelector('.table-wrap');
+  if(wrap) wrap.scrollLeft = wrap.scrollWidth;
+}
+
+function delStudent(key, id){
+  const stu = findStu(key, id);
+  if(!stu) return;
+  if(!confirm('确定删除「' + stu.name + '」及其 5 次成绩吗？')) return;
+  store[key] = store[key].filter(s => s.id !== id);
+  save(); render();
+}
+
+function clearGroup(key){
+  if(!store[key].length){ alert('本组暂无数据。'); return; }
+  if(!confirm('确定清空「' + CONFIG[key].name + '」的全部学生与成绩吗？此操作不可撤销。')) return;
+  store[key] = [];
+  save(); render();
+}
+
+function exportCSV(key){
+  const list = store[key];
+  if(!list.length){ alert('本组暂无可导出的数据。'); return; }
+  const cell = v => {
+    const s = String(v == null ? '' : v);
+    return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+  };
+  const rows = [['测试轮次', ...list.map(s => s.name)]];
+  TESTS.forEach((t,i) => rows.push([t, ...list.map(s => s.scores[i] === null ? '' : s.scores[i])]));
+  rows.push(['平均分', ...list.map(s => { const a = avgOf(s); return a === null ? '' : a.toFixed(1); })]);
+
+  const csv = '\uFEFF' + rows.map(r => r.map(cell).join(',')).join('\r\n');
+  const blob = new Blob([csv], { type:'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = CONFIG[key].name + '-五次测试成绩.csv';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 1500);
+}
+
+/* ================= 学生作业图片 ================= */
+let photoTarget = null;
+
+function openPhotos(key, id){
+  const stu = findStu(key, id);
+  if(!stu) return;
+  photoTarget = { key, id };
+  document.getElementById('photoModal').dataset.open = '1';
+  renderPhotos();
+}
+
+function closePhotos(){
+  document.getElementById('photoModal').dataset.open = '0';
+  photoTarget = null;
+}
+
+function renderPhotos(){
+  if(!photoTarget) return;
+  const stu = findStu(photoTarget.key, photoTarget.id);
+  if(!stu){ closePhotos(); return; }
+  const photos = photosOf(stu);
+
+  document.getElementById('photoTitle').textContent = stu.name + ' · 作业图片';
+  document.getElementById('photoSub').textContent =
+    photos.length ? ('共 ' + photos.length + ' 张 · 点图片可看大图') : '暂无图片';
+
+  const grid = document.getElementById('photoGrid');
+  if(!photos.length){
+    grid.innerHTML = '<div class="photo-empty">还没有图片<br>点下方「添加图片」拍照或从相册选择</div>';
+    return;
+  }
+  grid.innerHTML = photos.map((p, i) => `
+    <div class="photo-item" data-act="pic-view" data-i="${i}">
+      <img src="${p}" alt="作业图片 ${i + 1}">
+      <button class="photo-del" data-act="pic-del" data-i="${i}" title="删除这张">×</button>
+    </div>`).join('');
+}
+
+function refreshStuPic(key, id){
+  const btn = root.querySelector('.pic-btn[data-id="' + id + '"]');
+  const stu = findStu(key, id);
+  if(!btn || !stu) return;
+  const photos = photosOf(stu);
+  btn.classList.toggle('has', photos.length > 0);
+  btn.title = photos.length ? '查看 / 添加作业图片' : '添加作业图片';
+  btn.innerHTML = (photos.length
+      ? '<img src="' + photos[0] + '" alt="作业图片">'
+      : CAM_ICON) +
+    (photos.length > 1 ? '<span class="pic-cnt">' + photos.length + '</span>' : '');
+}
+
+function compressImage(file, maxSide, quality){
+  return new Promise((resolve, reject) => {
+    if(!file || !/^image\//.test(file.type)){ reject(new Error('不是图片')); return; }
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => {
+      try{
+        let w = img.naturalWidth, h = img.naturalHeight;
+        const scale = Math.min(1, maxSide / Math.max(w, h));
+        w = Math.max(1, Math.round(w * scale));
+        h = Math.max(1, Math.round(h * scale));
+        const cv = document.createElement('canvas');
+        cv.width = w; cv.height = h;
+        const ctx = cv.getContext('2d');
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, w, h);
+        ctx.drawImage(img, 0, 0, w, h);
+        resolve(cv.toDataURL('image/jpeg', quality));
+      }catch(err){ reject(err); }
+      finally{ URL.revokeObjectURL(url); }
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('图片读取失败')); };
+    img.src = url;
+  });
+}
+
+async function handlePhotoFiles(files){
+  if(!photoTarget) return;
+  const stu = findStu(photoTarget.key, photoTarget.id);
+  if(!stu) return;
+  const photos = photosOf(stu);
+
+  const room = MAX_PHOTOS - photos.length;
+  if(room <= 0){ alert('每位学生最多 ' + MAX_PHOTOS + ' 张图片，请先删除一些。'); return; }
+
+  const picked = Array.from(files || []).filter(f => f && /^image\//.test(f.type)).slice(0, room);
+  if(!picked.length) return;
+
+  const before = photos.length;
+  for(const f of picked){
+    try{
+      const data = await compressImage(f, 900, 0.72);
+      photos.push(data);
+    }catch(e){ /* 跳过读取失败的图片 */ }
+  }
+  if(photos.length === before){ alert('图片读取失败，请换一张试试。'); return; }
+
+  if(!save()){
+    photos.length = before;
+    save();
+    alert('本机存储空间不足，图片没能保存。\n请先删除部分图片，或导出 CSV 备份后再清理。');
+    renderPhotos();
+    return;
+  }
+  renderPhotos();
+  refreshStuPic(photoTarget.key, photoTarget.id);
+}
+
+function deletePhoto(i){
+  if(!photoTarget) return;
+  const stu = findStu(photoTarget.key, photoTarget.id);
+  if(!stu) return;
+  const photos = photosOf(stu);
+  if(!photos[i]) return;
+  if(!confirm('确定删除这张图片吗？')) return;
+  photos.splice(i, 1);
+  save();
+  renderPhotos();
+  refreshStuPic(photoTarget.key, photoTarget.id);
+}
+
+function viewPhoto(i){
+  if(!photoTarget) return;
+  const stu = findStu(photoTarget.key, photoTarget.id);
+  if(!stu) return;
+  const photos = photosOf(stu);
+  if(!photos[i]) return;
+  const img = document.getElementById('viewerImg');
+  img.src = photos[i];
+  document.getElementById('imageViewer').dataset.open = '1';
+}
+
+function closeViewer(){
+  document.getElementById('imageViewer').dataset.open = '0';
+  document.getElementById('viewerImg').src = '';
+}
+
+/* ================= 事件 ================= */
+document.addEventListener('click', e => {
+  const el = e.target.closest('[data-act]');
+  if(!el) return;
+  const act = el.dataset.act;
+  const key = route.group;
+
+  switch(act){
+    case 'home':      go('home'); break;
+    case 'go-exp':    go('tiers'); break;
+    case 'go-group':  go('table', el.dataset.group); break;
+    case 'add':       addStudent(key); break;
+    case 'del':       e.stopPropagation(); delStudent(key, el.dataset.id); break;
+    case 'clear':     clearGroup(key); break;
+    case 'export':    exportCSV(key); break;
+    case 'pic-open':  e.stopPropagation(); openPhotos(key, el.dataset.id); break;
+    case 'pic-close': closePhotos(); break;
+    case 'pic-add':   document.getElementById('photoInput').click(); break;
+    case 'pic-del':   e.stopPropagation(); deletePhoto(Number(el.dataset.i)); break;
+    case 'pic-view':  viewPhoto(Number(el.dataset.i)); break;
+  }
+});
+
+root.addEventListener('input', e => {
+  const t = e.target;
+  const key = route.group;
+
+  if(t.classList.contains('score')){
+    const stu = findStu(key, t.dataset.id);
+    if(!stu) return;
+    const idx = Number(t.dataset.idx);
+    const v = t.value.trim();
+    stu.scores[idx] = (v === '' || isNaN(Number(v))) ? null : Number(v);
+    save();
+    refreshTotals(key);
+    return;
+  }
+
+  if(t.classList.contains('name-input')){
+    const stu = findStu(key, t.dataset.id);
+    if(!stu) return;
+    stu.name = t.value.slice(0,12);
+    save();
+  }
+});
+
+root.addEventListener('change', e => {
+  const t = e.target;
+  if(!t.classList.contains('score')) return;
+  const key = route.group;
+  const stu = findStu(key, t.dataset.id);
+  if(!stu) return;
+  const idx = Number(t.dataset.idx);
+  const v = t.value.trim();
+  if(v === ''){
+    stu.scores[idx] = null;
+    t.value = '';
+  }else{
+    let n = Math.round(Number(v));
+    if(!isFinite(n)) n = 0;
+    n = Math.max(0, Math.min(100, n));
+    stu.scores[idx] = n;
+    t.value = n;
+  }
+  save();
+  refreshTotals(key);
+});
+
+root.addEventListener('focusout', e => {
+  const t = e.target;
+  if(!t.classList || !t.classList.contains('name-input')) return;
+  const key = route.group;
+  const stu = findStu(key, t.dataset.id);
+  if(!stu) return;
+  const v = t.value.trim().slice(0,12);
+  if(!v){
+    t.value = stu.name || '未命名';
+  }else{
+    stu.name = v;
+    t.value = v;
+  }
+  save();
+});
+
+root.addEventListener('keydown', e => {
+  const t = e.target;
+  if(e.key !== 'Enter') return;
+  if(t.classList.contains('name-input')){ e.preventDefault(); t.blur(); return; }
+  if(t.classList.contains('score')){
+    e.preventDefault();
+    const idx = Number(t.dataset.idx);
+    const next = idx < 4 ? root.querySelector('.score[data-id="' + t.dataset.id + '"][data-idx="' + (idx + 1) + '"]') : null;
+    if(next){ next.focus(); next.select(); }
+    else t.blur();
+  }
+});
+
+/* ================= 图片弹层事件 ================= */
+(function(){
+  const input = document.getElementById('photoInput');
+  const modal = document.getElementById('photoModal');
+  const viewer = document.getElementById('imageViewer');
+
+  input.addEventListener('change', e => {
+    const files = e.target.files;
+    handlePhotoFiles(files);
+    e.target.value = '';
+  });
+
+  modal.addEventListener('click', e => {
+    if(e.target === modal) closePhotos();
+  });
+
+  viewer.addEventListener('click', closeViewer);
+
+  document.addEventListener('keydown', e => {
+    if(e.key !== 'Escape') return;
+    if(viewer.dataset.open === '1'){ closeViewer(); return; }
+    if(modal.dataset.open === '1'){ closePhotos(); }
+  });
+})();
+
+/* ================= PWA：安装到手机 ================= */
+(function(){
+  const fab = document.getElementById('installFab');
+  if(!fab) return;
+
+  const standalone =
+    (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) ||
+    window.navigator.standalone === true;
+  const ua = navigator.userAgent || '';
+  const isIOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const canSW = 'serviceWorker' in navigator && /^https?:/.test(location.protocol);
+
+  if(canSW){
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js').catch(() => {});
+    });
+  }
+
+  let deferred = null;
+
+  window.addEventListener('beforeinstallprompt', e => {
+    e.preventDefault();
+    deferred = e;
+    if(!standalone) fab.dataset.show = '1';
+  });
+
+  if(isIOS && !standalone) fab.dataset.show = '1';
+
+  fab.addEventListener('click', async () => {
+    if(deferred){
+      deferred.prompt();
+      try{ await deferred.userChoice; }catch(e){}
+      deferred = null;
+      fab.dataset.show = '0';
+      return;
+    }
+    const msg = isIOS
+      ? '安装到 iPhone / iPad：\n\n1. 用 Safari 打开本页\n2. 点击底部分享按钮（方框向上箭头）\n3. 选择「添加到主屏幕」\n4. 点「添加」，桌面就会出现小熊图标'
+      : '安装到手机：\n\n打开浏览器右上角菜单，选择「安装应用」或「添加到主屏幕」，即可在桌面生成小熊图标，之后可全屏、离线使用。';
+    alert(msg);
+  });
+
+  window.addEventListener('appinstalled', () => { fab.dataset.show = '0'; });
+})();
+
+/* ================= 启动 ================= */
+render();
+</script>
+</body>
+</html>
